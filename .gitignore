@@ -1,0 +1,32 @@
+# IntelliJ project files
+.idea
+*.iml
+out
+gen
+
+### Go template
+# Binaries for programs and plugins
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Test binary, built with `go test -c`
+*.test
+
+# Output of the go coverage tool, specifically when used with LiteIDE
+*.out
+
+# Dependency directories (remove the comment below to include it)
+# vendor/
+tls/
+
+docker_volume/
+.docker_volume/
+
+bin
+bin/
+
+node_modules/
+dist/
