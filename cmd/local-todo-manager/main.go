@@ -1,6 +1,8 @@
 package main
 
 import (
+	"fmt"
+	"github.com/UnDer-7/local-to-do-manager/internal/config"
 	"net/http"
 	"os"
 	"path"
@@ -15,15 +17,20 @@ func main() {
 	router := chi.NewRouter()
 	router.Use(middleware.Logger)
 
-	frontendPath := os.Getenv("LOCAL_TO_DO_MANAGER_FRONTEND_BASE_PATH")
+	envs := config.LoadEnvs()
 
-	FileServerSPA(router, frontendPath, "/home/under7/Workspace/go/src/github.com/UnDer-7/local-to-do-manager/website/dist")
+	FileServerSPA(router, envs.Frontend.BasePath, "/home/under7/Workspace/go/src/github.com/UnDer-7/local-to-do-manager/website/dist")
 
 	http.ListenAndServe(":3000", router)
 }
 
 // FileServerSPA source: https://stackoverflow.com/a/76534692
 func FileServerSPA(router chi.Router, public, static string) {
+	fmt.Println("Frontend base path: " + public)
+	if public == "" {
+		panic("Frontend base path cannot be empty, it needs at least to be an slash (/)")
+	}
+
 	if strings.ContainsAny(public, "{}*") {
 		panic("FileServer does not permit URL parameters.")
 	}
